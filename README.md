@@ -66,3 +66,30 @@ Des validations défensives sont mises en place :
 - La représentation ne peut pas être `null`
 - Elle doit contenir exactement 2 caractères
 - Le rang et la couleur doivent être valides, sinon une `IllegalArgumentException` est levée
+
+---
+
+## Étape 2 – Modélisation d’une main
+
+Cette étape consiste à modéliser une main de poker composée de cinq cartes.
+
+### Classe Hand
+
+La classe `Hand` représente une main composée exactement de 5 cartes.
+
+Des validations sont mises en place :
+- La liste de cartes ne peut pas être `null`
+- Une main doit contenir exactement 5 cartes
+
+La classe est immuable :
+- La liste interne est copiée via `List.copyOf`
+- Aucune modification n’est possible après création
+
+Une méthode factory `Hand.from(String line)` permet de créer une main à partir d’une représentation textuelle.
+
+Exemple :
+
+- "AS KH 2D 3C 4S"
+
+Une méthode `sorted()` permet de retourner une nouvelle instance de `Hand` dont les cartes sont triées par valeur décroissante.  
+Cette méthode prépare le terrain pour la future logique d’évaluation des combinaisons.
