@@ -93,3 +93,32 @@ Exemple :
 
 Une méthode `sorted()` permet de retourner une nouvelle instance de `Hand` dont les cartes sont triées par valeur décroissante.  
 Cette méthode prépare le terrain pour la future logique d’évaluation des combinaisons.
+
+---
+
+## Étape 3 – Catégorisation des mains
+
+Cette étape introduit la notion de catégorie de main.
+
+### Enum HandCategory
+
+L’enum `HandCategory` représente les différentes combinaisons possibles au poker :
+
+- HIGH_CARD
+- PAIR
+- TWO_PAIRS
+- THREE_OF_A_KIND
+- STRAIGHT
+- FLUSH
+- FULL_HOUSE
+- FOUR_OF_A_KIND
+- STRAIGHT_FLUSH
+
+Chaque catégorie contient :
+
+- Un niveau de force numérique permettant de comparer les combinaisons entre elles
+- Un nom d’affichage (`displayName`) utilisé pour la présentation du résultat
+
+Le niveau de force permet de déterminer facilement quelle main est supérieure à une autre sans dépendre de l’ordre de déclaration de l’enum.
+
+Cette enum prépare la mise en place de la logique d’évaluation des mains.
