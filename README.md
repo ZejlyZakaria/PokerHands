@@ -122,3 +122,63 @@ Chaque catégorie contient :
 Le niveau de force permet de déterminer facilement quelle main est supérieure à une autre sans dépendre de l’ordre de déclaration de l’enum.
 
 Cette enum prépare la mise en place de la logique d’évaluation des mains.
+
+
+---
+
+---
+
+## Étape 4 – Résultat d’évaluation
+
+Cette étape introduit la classe représentant le résultat produit après l’analyse d’une main.
+
+### Classe HandResult
+
+La classe `HandResult` encapsule :
+
+- La catégorie de la main (`HandCategory`)
+- Une description textuelle destinée à l’affichage
+- Une liste de valeurs numériques utilisées pour départager deux mains de même catégorie
+
+La liste des valeurs (tie-breakers) est ordonnée du critère le plus important au moins important.
+
+Exemples :
+
+- Four of a Kind (Jacks avec kicker 9) → [11, 9]
+- Full House (Ace over King) → [14, 13]
+- Two Pairs (9 et 7 avec kicker As) → [9, 7, 14]
+
+La classe est immuable : une fois créé, un résultat ne peut pas être modifié.
+
+---
+
+## Étape 5 – Évaluation des combinaisons
+
+Cette étape introduit la classe responsable de l’analyse des mains.
+
+### Classe HandEvaluator
+
+La classe `HandEvaluator` contient la logique permettant de déterminer la meilleure combinaison possible pour une main de cinq cartes.
+
+Les combinaisons sont évaluées de la plus forte à la plus faible :
+
+- STRAIGHT_FLUSH
+- FOUR_OF_A_KIND
+- FULL_HOUSE
+- FLUSH
+- STRAIGHT
+- THREE_OF_A_KIND
+- TWO_PAIRS
+- PAIR
+- HIGH_CARD
+
+Le cas particulier du straight A-2-3-4-5 est correctement pris en compte.
+
+Les descriptions sont générées dynamiquement, par exemple :
+
+- Two pair : 9 over 7
+- Straight : Ace high
+- Flush : King high
+- Four of a Kind : Jacks
+
+Cette organisation sépare clairement la logique d’évaluation de la représentation du résultat.
