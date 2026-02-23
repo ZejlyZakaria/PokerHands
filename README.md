@@ -182,3 +182,52 @@ Les descriptions sont générées dynamiquement, par exemple :
 - Four of a Kind : Jacks
 
 Cette organisation sépare clairement la logique d’évaluation de la représentation du résultat.
+
+---
+
+## Étape 6 – Comparaison entre deux mains
+
+Une fois les deux mains évaluées (Black et White), la comparaison se fait via deux méthodes statiques dans `HandResult` :
+
+- `compare(a, b)` : retourne un entier (1 si a gagne, -1 si b gagne, 0 si égalité)
+    - Compare d’abord la catégorie (via `getStrength()`)
+    - En cas d’égalité de catégorie, compare les tie-breakers position par position (du plus important au moins important)
+
+- `whoWins(black, white)` : retourne directement le message final attendu : 
+  • "Black wins. - with [description]" (ex. : "Black wins. - with full house: 4 over 2")  
+  • "White wins. - with [description]" (ex. : "White wins. - with high card: Ace")  
+  • "Tie."
+
+---
+
+## Étape 7 – Parsing de l’entrée et traitement complet
+
+Cette étape finalise le flux complet de l’application en introduisant le parsing des lignes d’entrée.
+
+### Classe InputParser
+
+La classe `InputParser` est responsable de transformer une ligne d’entrée brute (format du sujet) en résultat final.
+
+Méthode principale : `processLine(String line)`
+
+Fonctionnement :
+
+1. Validation de base : ligne non vide et non nulle
+2. Split de la ligne sur les espaces
+3. Vérification du format strict : "Black:" + 5 cartes + "White:" + 5 cartes
+4. Détection des doublons globaux (entre les deux mains) via un `HashSet<String>`
+5. Extraction des cartes Black et White sous forme de chaînes
+6. Création des deux objets `Hand` via `Hand.from(String)`
+7. Évaluation des deux mains avec `HandEvaluator.evaluate()`
+8. Comparaison via `HandResult.whoWins()` et retour du message final
+
+Gestion des erreurs :
+- Format invalide → "Invalid format"
+- Carte invalide → "Invalid card: [détail]"
+- Doublon → "Invalid input: duplicate card [carte]"
+
+Exemple d’entrée : Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH
+
+Sortie : White wins - with high card: Ace
+
+Cette classe relie toutes les briques précédentes (modèle, évaluation, comparaison) et produit exactement le résultat attendu.
