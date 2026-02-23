@@ -359,7 +359,7 @@ public class HandEvaluator {
     }
 
     private static int computeStraightHigh(List<Integer> values) {
-        // Pour le cas de roue straight, the high card used for comparison is 5
+        // Pour le cas de la roue straight, the high card used for comparison is 5
         if (values.equals(List.of(2, 3, 4, 5, 14))) {
             return 5;
         }

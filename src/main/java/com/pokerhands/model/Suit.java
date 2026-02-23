@@ -18,8 +18,9 @@ public enum Suit {
     }
 
     public static Suit from(char symbol) {
+        char upper = Character.toUpperCase(symbol);
         for (Suit s : Suit.values()){
-            if(s.getSymbol() == symbol){
+            if(s.getSymbol() == upper){
                 return s;
             }
         }

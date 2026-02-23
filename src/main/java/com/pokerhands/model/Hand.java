@@ -1,7 +1,9 @@
 package com.pokerhands.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Hand {
     private final List<Card> cards;
@@ -50,8 +52,12 @@ public class Hand {
         }
 
         List<Card> cardList = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
         for (String part : parts){
             Card card = Card.from(part);
+            if (!seen.add(part)) {
+                throw new IllegalArgumentException("Duplicate card in hand: " + part);
+            }
             cardList.add(card);
         }
 

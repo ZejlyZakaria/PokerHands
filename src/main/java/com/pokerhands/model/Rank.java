@@ -32,8 +32,9 @@ public enum Rank {
     }
 
     public static Rank from(char symbol) {
+        char upper = Character.toUpperCase(symbol);
         for (Rank rank : Rank.values()) {
-            if (rank.getSymbol() == symbol) {
+            if (rank.getSymbol() == upper) {
                 return rank;
             }
         }
