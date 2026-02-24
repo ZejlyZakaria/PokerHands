@@ -1,53 +1,110 @@
 package com.pokerhands;
 
-import com.pokerhands.model.*;
-import com.pokerhands.evaluator.HandEvaluator;
+import com.pokerhands.parser.InputParser;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Exemple 1 : Four of a Kind (quatre Rois + As)
-        Hand hand1 = Hand.from("KH KS KC KD AH");
-        HandResult result1 = HandEvaluator.evaluate(hand1);
-        System.out.println("Hand 1: " + hand1);
-        System.out.println("Category: " + result1.getCategory().getDisplayName());
-        System.out.println("Description: " + result1.getDescription());
-        System.out.println("TieBreakers: " + result1.getTieBreakerRanks());
-        System.out.println();
+        Scanner scanner = new Scanner(System.in);
 
-        // Exemple 2 : Full House (Brelan de 4 sur paire de 2)
-        Hand hand2 = Hand.from("TH TS AS AC TD");
-        HandResult result2 = HandEvaluator.evaluate(hand2);
-        System.out.println("Hand 2: " + hand2);
-        System.out.println("Category: " + result2.getCategory().getDisplayName());
-        System.out.println("Description: " + result2.getDescription());
-        System.out.println("TieBreakers: " + result2.getTieBreakerRanks());
-        System.out.println();
+        System.out.println("=== Poker Hands Evaluator ===");
 
-        // Exemple 3 : Straight (A-2-3-4-5)
-        Hand hand3 = Hand.from("AH 2D 3S 4C 5H");
-        HandResult result3 = HandEvaluator.evaluate(hand3);
-        System.out.println("Hand 3: " + hand3);
-        System.out.println("Category: " + result3.getCategory().getDisplayName());
-        System.out.println("Description: " + result3.getDescription());
-        System.out.println("TieBreakers: " + result3.getTieBreakerRanks());
-        System.out.println();
+        boolean running = true;
 
-        // Exemple 4 : High Card
-        Hand hand4 = Hand.from("2H 5D 7S 8C AH");
-        HandResult result4 = HandEvaluator.evaluate(hand4);
-        System.out.println("Hand 4: " + hand4);
-        System.out.println("Category: " + result4.getCategory().getDisplayName());
-        System.out.println("Description: " + result4.getDescription());
-        System.out.println("TieBreakers: " + result4.getTieBreakerRanks());
+        while (running) {
+            System.out.println("\nChoisissez un mode :");
+            System.out.println("1 - Saisie manuelle");
+            System.out.println("2 - Lecture depuis un fichier");
+            System.out.println("exit - Quitter");
+            System.out.print("> ");
 
-        // Exemple 5 : Two Pair
-        Hand hand5 = Hand.from("9H TH JH QH KH");
-        HandResult result5 = HandEvaluator.evaluate(hand5);
-        System.out.println("Hand 5: " + hand5);
-        System.out.println("Category: " + result5.getCategory().getDisplayName());
-        System.out.println("Description: " + result5.getDescription());
-        System.out.println("TieBreakers: " + result5.getTieBreakerRanks());
+            String choice = scanner.nextLine().trim();
+
+            if (choice.equalsIgnoreCase("exit")) {
+                System.out.println("Au revoir !");
+                break;
+            }
+
+            switch (choice) {
+                case "1":
+                    running = modeSaisieManuelle(scanner);
+                    break;
+                case "2":
+                    System.out.print("Entrez le nom du fichier : ");
+                    String filePath = scanner.nextLine().trim();
+                    modeLectureFichier(filePath);
+                    break;
+                default:
+                    System.out.println("Choix invalide.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static boolean modeSaisieManuelle(Scanner scanner) {
+
+        System.out.println("\nMode saisie manuelle.");
+        System.out.println("Entrez une ligne au format attendu.");
+
+        while (true) {
+            System.out.print("\nligne > ");
+            String line = scanner.nextLine().trim();
+
+            if (line.isEmpty()) continue;
+
+            String result = InputParser.processLine(line);
+            System.out.println(result);
+
+            System.out.println("\nQue voulez-vous faire ?");
+            System.out.println("c - Continuer");
+            System.out.println("menu - Retour au menu");
+            System.out.println("exit - Quitter l'application");
+            System.out.print("> ");
+
+            String next = scanner.nextLine().trim();
+
+            if (next.equalsIgnoreCase("c")) {
+                continue;
+            } else if (next.equalsIgnoreCase("menu")) {
+                return true;  // retourne au menu principal
+            } else if (next.equalsIgnoreCase("exit")) {
+                System.out.println("Au revoir !");
+                return false; // arrête complètement le programme
+            } else {
+                System.out.println("Choix invalide, retour au menu.");
+                return true;
+            }
+        }
+    }
+
+    private static void modeLectureFichier(String filePath) {
+        System.out.println("\nLecture du fichier : " + filePath);
+
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+
+            if (lines.isEmpty()) {
+                System.out.println("Le fichier est vide.");
+                return;
+            }
+
+            for (String line : lines) {
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#")) continue;
+
+                String result = InputParser.processLine(line);
+                System.out.println(result);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la lecture : " + e.getMessage());
+        }
     }
 }

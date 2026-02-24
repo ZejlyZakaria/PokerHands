@@ -41,5 +41,25 @@ public enum Rank {
         throw new IllegalArgumentException("Invalid rank symbol: " + symbol);
     }
 
+    public static String displayRank(int value) {
+        return switch (value) {
+            case 14 -> "Ace";
+            case 13 -> "King";
+            case 12 -> "Queen";
+            case 11 -> "Jack";
+            default -> String.valueOf(value);
+        };
+    }
+
+    public static String displayRankPlural(int rank) {
+        return switch (rank) {
+            case 14 -> "Aces";
+            case 13 -> "Kings";
+            case 12 -> "Queens";
+            case 11 -> "Jacks";
+            default -> String.valueOf(rank); // 2-10 restent inchangés
+        };
+    }
+
 
 }

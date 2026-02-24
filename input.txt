@@ -1,0 +1,68 @@
+# ================================
+# Cas officiels du sujet
+# ================================
+
+Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH
+Black: 2H 4S 4C 2D 4H White: 2S 8S AS QS 3S
+Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH
+Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C KH
+
+# ================================
+# Tie-breakers High Card
+# ================================
+
+Black: KH QD 8S 7D 2C White: KS QC 6H 5S 3D
+
+# ================================
+# Pair + kicker
+# ================================
+
+Black: 2H 2D 5S 9C KD White: 2C 2S 4H 8D KH
+
+# ================================
+# Two pairs
+# ================================
+
+Black: 2H 2D 5S 5C KD White: 2C 2S 4H 4D KH
+
+# ================================
+# Straight
+# ================================
+
+Black: 5H 6D 7S 8C 9H White: 4C 5D 6S 7H 8D
+
+# ================================
+# Flush
+# ================================
+
+Black: 2H 5H 7H 9H KH White: 3H 4H 6H 8H QH
+
+# ================================
+# Four of a kind
+# ================================
+
+Black: 2H 2D 2S 2C 5H White: 3H 3D 3S 3C 4H
+
+# ================================
+# Wheel straight (A-2-3-4-5)
+# ================================
+
+Black: AH 2D 3S 4C 5H White: 6H 7D 8S 9C TD
+
+# ================================
+# Straight flush
+# ================================
+
+Black: AH 2H 3H 4H 5H White: 6S 7S 8S 9S TS
+
+# ================================
+# Doublon entre les mains (doit être invalide)
+# ================================
+
+Black: 5H 6H 7H 8H 9H White: 4H 5H 6H 7H 8H
+
+# ================================
+# Format invalide
+# ================================
+
+Black: 2H 3D 5S White: 2C 3H 4S 8C AH

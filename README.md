@@ -231,3 +231,35 @@ Exemple d’entrée : Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH
 Sortie : White wins - with high card: Ace
 
 Cette classe relie toutes les briques précédentes (modèle, évaluation, comparaison) et produit exactement le résultat attendu.
+
+---
+
+## Tests unitaires
+
+Les tests sont écrits avec JUnit 5.
+
+La classe HandEvaluatorTest couvre :
+
+- Évaluation des différentes catégories (Pair, Two Pairs, etc.)
+- Cas particuliers (Straight A-2-3-4-5)
+- Comparaison entre deux mains
+- Cas d’égalité
+- Gestion des erreurs
+
+Les tests permettent de valider la logique métier indépendamment de l’interface d’entrée.
+
+--- 
+
+## Comment lancer le programme
+
+1. Compilez et exécutez la classe `Main.java` (ou via `mvn exec:java`)
+2. Choisissez un mode :
+  - `1` : saisie manuelle interactive
+  - `2` : lecture d’un fichier)
+3. Pour le mode fichier, placez un fichier texte à la racine du projet (ex: input.txt) avec une ligne par partie.
+
+Exemple de fichier input.txt :
+
+Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH
+
+Black: 2H 4S 4C 2D 4H White: 2S 8S AS QS 3S

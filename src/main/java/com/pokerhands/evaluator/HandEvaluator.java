@@ -4,6 +4,10 @@ import com.pokerhands.model.*;
 
 import java.util.*;
 
+import static com.pokerhands.model.Rank.displayRankPlural;
+import static com.pokerhands.model.Rank.displayRank;
+
+
 public class HandEvaluator {
 
     public static HandResult evaluate(Hand hand) {
@@ -53,9 +57,8 @@ public class HandEvaluator {
     // ====================== STRAIGHT FLUSH ======================
 
     private static HandResult createStraightFlushResult(int straightHigh) {
-        String description = "Straight Flush : "
-                + displayRank(straightHigh)
-                + " high";
+        String highDisplay = displayRank(straightHigh);
+        String description = "straight flush to the " + highDisplay;
 
         return new HandResult(
                 HandCategory.STRAIGHT_FLUSH,
@@ -83,7 +86,7 @@ public class HandEvaluator {
             }
         }
 
-        String description = "Four of a kind: " + displayRankPlural(quadRank);
+        String description = "four of a kind: " + displayRankPlural(quadRank);
 
         return new HandResult(
                 HandCategory.FOUR_OF_A_KIND,
@@ -111,7 +114,7 @@ public class HandEvaluator {
             }
         }
 
-        String description = "Full House: " + displayRank(threeRank) + " Over " + displayRank(pairRank);
+        String description = "full house: " + displayRank(threeRank) + " over " + displayRank(pairRank);
 
         return new HandResult(
                 HandCategory.FULL_HOUSE,
@@ -127,7 +130,7 @@ public class HandEvaluator {
         List<Integer> values = getSortedDescendingValues(hand);
         int highCard = values.get(0);
 
-        String description = "Flush: "
+        String description = "flush: "
                 + displayRank(highCard)
                 + " high";
 
@@ -141,10 +144,8 @@ public class HandEvaluator {
     // ====================== STRAIGHT ======================
 
     private static HandResult createStraightResult(int straightHigh) {
-
-        String description = "Straight: "
-                + displayRank(straightHigh)
-                + " high";
+        String highDisplay = displayRank(straightHigh);   // Ace, King, Queen...
+        String description = "straight to the " + highDisplay;
 
         return new HandResult(
                 HandCategory.STRAIGHT,
@@ -179,7 +180,7 @@ public class HandEvaluator {
         tieBreakers.add(threeRank);
         tieBreakers.addAll(kickers);
 
-        String description = "Three Of A Kind : " + displayRankPlural(threeRank);
+        String description = "three of a kind: " + displayRankPlural(threeRank);
 
         return new HandResult(
                 HandCategory.THREE_OF_A_KIND,
@@ -221,7 +222,7 @@ public class HandEvaluator {
         List<Integer> tieBreakers = new ArrayList<>(pairRanks);
         tieBreakers.add(kicker);
 
-        String description = "Two Pair : " + displayRankPlural(pairRanks.get(0)) + " over " + displayRankPlural(pairRanks.get(1));
+        String description = "two pairs: " + displayRankPlural(pairRanks.get(0)) + " and " + displayRankPlural(pairRanks.get(1));
 
         return new HandResult(
                 HandCategory.TWO_PAIRS,
@@ -264,7 +265,7 @@ public class HandEvaluator {
         tieBreakers.add(pairRank);
         tieBreakers.addAll(kickers);
 
-        String description = "Pair Of " + displayRankPlural(pairRank);
+        String description = "pair of " + displayRankPlural(pairRank);
 
         return new HandResult(
                 HandCategory.PAIR,
@@ -277,12 +278,11 @@ public class HandEvaluator {
 
     private static HandResult createHighCardResult(Hand hand) {
         List<Integer> values = getSortedDescendingValues(hand);
-        int highValue = values.get(0);
 
         return new HandResult(
-            HandCategory.HIGH_CARD,
-            "High Card: " + displayRank(highValue),
-            values
+                HandCategory.HIGH_CARD,
+                "high card",
+                values
         );
     }
 
@@ -365,25 +365,5 @@ public class HandEvaluator {
         }
 
         return values.get(values.size() - 1);
-    }
-
-    private static String displayRank(int value) {
-        return switch (value) {
-            case 14 -> "Ace";
-            case 13 -> "King";
-            case 12 -> "Queen";
-            case 11 -> "Jack";
-            default -> String.valueOf(value);
-        };
-    }
-
-    private static String displayRankPlural(int rank) {
-        return switch (rank) {
-            case 14 -> "Aces";
-            case 13 -> "Kings";
-            case 12 -> "Queens";
-            case 11 -> "Jacks";
-            default -> String.valueOf(rank); // 2-10 restent inchangés
-        };
     }
 }
